@@ -3,120 +3,136 @@ body {
     background-color: #e9f7fe; /* Fondo azul muy claro */
     color: #333;
     margin: 0;
-    padding: 10px; /* Reducimos el padding general del body */
+    padding: 10px; /* Padding general reducido */
     text-align: center;
-    line-height: 1.4; /* Reducimos el interlineado */
-    font-size: 0.9em; /* Reducimos el tamaño de fuente base */
-    overflow-y: hidden; /* Oculta el scroll vertical si no es necesario */
-    overflow-x: auto; /* Permite scroll horizontal si es necesario para columnas */
-    min-width: 1200px; /* Asegura un ancho mínimo para que las columnas funcionen en monitores pequeños */
+    line-height: 1.3; /* Interlineado más compacto */
+    font-size: 0.85em; /* Fuente base ligeramente más pequeña */
+    overflow: hidden; /* Oculta scroll si todo cabe */
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ocupa el 100% de la altura de la ventana */
 }
 
 h1 {
     color: #004080;
-    margin-bottom: 20px; /* Menos margen inferior */
-    font-size: 2.2em; /* Título más pequeño */
+    margin-bottom: 15px; /* Menos margen inferior */
+    font-size: 2em; /* Título principal más pequeño */
     font-weight: 600;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    flex-shrink: 0; /* Evita que el título se encoja */
 }
 
 #malla-curricular {
-    /* Eliminamos max-width para que ocupe todo el espacio necesario */
+    max-width: 1400px; /* Ancho máximo para la malla */
     margin: 0 auto;
     background-color: #ffffff;
-    padding: 15px; /* Reducimos el padding */
-    border-radius: 10px; /* Ligeramente menos redondeado */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
+    padding: 15px; /* Padding reducido */
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     
-    display: flex; /* Mantiene los años en columnas */
-    flex-wrap: nowrap; /* Evita que los años se envuelvan a la siguiente línea */
-    justify-content: center; /* Centra las columnas de años */
-    align-items: flex-start; /* Alinea los años arriba */
-    gap: 15px; /* Reducimos el espacio entre las secciones de año */
-    height: calc(100vh - 100px); /* Intenta que la malla ocupe la altura de la ventana menos el h1 y el padding */
+    display: flex;
+    flex-direction: column; /* Apila las secciones de año verticalmente */
+    flex-grow: 1; /* Permite que ocupe el espacio restante */
+    overflow-y: auto; /* Permite scroll vertical solo si la malla excede el espacio */
 }
 
 .year-section {
     background-color: #f0f8ff;
     border: 1px solid #cceeff;
-    border-radius: 8px; /* Ligeramente menos redondeado */
-    padding: 15px; /* Reducimos el padding */
+    border-radius: 8px;
+    padding: 15px; /* Padding reducido */
+    margin-bottom: 20px; /* Margen entre años */
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
     
-    flex: 0 0 19%; /* Establecemos un ancho fijo para cada año (ej. 5 años, 19% cada uno para 95% total) */
-    max-width: 19%; /* Asegura que no crezca más allá */
-    min-width: 200px; /* Un ancho mínimo para que no se vea ilegible */
-
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* El contenido del año se apila (título y luego semestres) */
     align-items: center;
-    overflow-y: auto; /* Permite scroll solo dentro de la columna del año si los semestres no caben */
-    height: 100%; /* Ocupa el 100% de la altura disponible de #malla-curricular */
+    flex-shrink: 0; /* Evita que los años se encojan */
 }
 
 .year-section h2 {
     color: #0056b3;
-    font-size: 1.8em; /* Título del año más pequeño */
+    font-size: 1.6em; /* Título del año más pequeño */
     margin-top: 0;
-    margin-bottom: 15px; /* Menos margen */
-    border-bottom: 1px solid #a0d4f7; /* Borde más delgado */
-    padding-bottom: 8px; /* Menos padding */
+    margin-bottom: 15px;
+    border-bottom: 1px solid #a0d4f7;
+    padding-bottom: 8px;
     width: 100%;
-    flex-shrink: 0; /* Evita que el título se encoja */
+    text-align: center;
+}
+
+/* Contenedor para agrupar los semestres de un año y ponerlos en fila */
+.semestres-del-anio {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los semestres se envuelvan si no hay espacio */
+    justify-content: center;
+    gap: 15px; /* Espacio entre los contenedores de semestre */
+    width: 100%;
 }
 
 .semestre-container {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
-    border-radius: 6px; /* Menos redondeado */
-    padding: 10px; /* Reducimos el padding */
-    margin-bottom: 10px; /* Reducimos el margen inferior */
+    border-radius: 6px;
+    padding: 10px; /* Padding reducido */
+    margin-bottom: 0; /* Elimina el margen inferior si ya está el gap en .semestres-del-anio */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04);
+    
+    flex: 1; /* Los semestres intentan ocupar el mismo espacio */
+    min-width: 280px; /* Ancho mínimo para cada semestre */
+    max-width: calc(50% - 7.5px); /* Para 2 semestres por fila */
+    
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px; /* Espacio aún más pequeño entre los ramos */
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04); /* Sombra muy sutil */
-    width: 100%;
-    flex-shrink: 0; /* Evita que los semestres se encojan */
+    flex-direction: column; /* Apila el título del semestre y los ramos */
+    align-items: center;
 }
 
 .semestre-container h3 {
     color: #007bff;
-    font-size: 1.2em; /* Título del semestre más pequeño */
+    font-size: 1.1em; /* Título del semestre más pequeño */
     width: 100%;
     margin-top: 0;
-    margin-bottom: 10px; /* Menos margen */
+    margin-bottom: 10px;
     text-align: center;
     border-bottom: 1px dashed #c0e0ff;
-    padding-bottom: 5px; /* Menos padding */
+    padding-bottom: 5px;
+}
+
+/* Contenedor para los ramos dentro de cada semestre */
+.ramos-del-semestre {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px; /* Espacio entre los ramos */
+    width: 100%;
 }
 
 .ramo {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
-    border-radius: 5px; /* Bordes aún menos redondeados */
-    padding: 8px; /* Reducimos el padding del ramo */
-    width: 160px; /* Ancho del ramo más pequeño */
-    min-height: 80px; /* Altura mínima del ramo más pequeña */
+    border-radius: 5px;
+    padding: 8px; /* Padding del ramo reducido */
+    width: 150px; /* Ancho del ramo más pequeño */
+    min-height: 70px; /* Altura mínima del ramo más pequeña */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     text-align: center;
     cursor: pointer;
-    transition: all 0.2s ease; /* Transición más rápida */
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); /* Sombra muy sutil */
-    font-size: 0.8em; /* Fuente aún más pequeña para el contenido del ramo */
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    font-size: 0.75em; /* Fuente del contenido del ramo más pequeña */
 }
 
 .ramo:hover {
-    transform: translateY(-2px) scale(1.01); /* Efecto de elevación muy sutil */
+    transform: translateY(-2px) scale(1.01);
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
 .ramo h3 {
-    margin: 2px 0 6px;
-    font-size: 1em; /* Ajuste el tamaño del título del ramo */
+    margin: 2px 0 5px;
+    font-size: 0.95em; /* Ajuste del tamaño del título del ramo */
     font-weight: 700;
     color: #333;
     line-height: 1.1;
@@ -124,7 +140,7 @@ h1 {
 
 .ramo p {
     margin: 1px 0;
-    font-size: 0.75em; /* Ajuste el tamaño del párrafo del ramo */
+    font-size: 0.7em; /* Ajuste del tamaño del párrafo del ramo */
     color: #666;
 }
 
@@ -154,51 +170,51 @@ h1 {
     border-color: #dc3545;
     color: #721c24;
     cursor: not-allowed;
-    opacity: 0.5; /* Más opaco aún */
-    filter: grayscale(40%); /* Más gris */
+    opacity: 0.5;
+    filter: grayscale(40%);
 }
 
-/* Estilos para responsividad (mantener si la pantalla es más pequeña que el mínimo) */
-@media (max-width: 1200px) {
-    /* En pantallas más pequeñas, los años pueden ocupar más ancho o ir a una sola columna */
-    #malla-curricular {
-        flex-wrap: wrap; /* Permitimos que los años se envuelvan si la pantalla no es suficientemente ancha */
-        height: auto; /* La altura se ajusta automáticamente */
-        min-width: unset;
-    }
-    .year-section {
-        flex: 0 0 calc(50% - 15px); /* 2 columnas */
-        max-width: calc(50% - 15px);
-        margin-bottom: 15px; /* Espacio entre años si se envuelven */
-        height: auto; /* La altura del año se ajusta al contenido */
-    }
-    .ramo {
-        width: calc(50% - 8px); /* 2 ramos por fila en semestres */
-    }
-}
-
+/* Estilos para responsividad */
 @media (max-width: 768px) {
-    .year-section {
-        flex: 0 0 calc(100% - 15px); /* 1 columna de año */
-        max-width: calc(100% - 15px);
-        min-width: unset;
-    }
-    .ramo {
-        width: calc(100% - 8px); /* 1 ramo por fila en semestres */
-    }
     h1 {
         font-size: 1.8em;
     }
     .year-section h2 {
-        font-size: 1.5em;
+        font-size: 1.4em;
     }
-    .semestre-container h3 {
-        font-size: 1.1em;
+    .semestres-del-anio {
+        flex-direction: column; /* Apila los semestres en pantallas pequeñas */
+        gap: 10px;
+    }
+    .semestre-container {
+        max-width: 100%; /* Cada semestre ocupa todo el ancho */
+        min-width: unset;
+    }
+    .ramo {
+        width: calc(50% - 8px); /* Dos ramos por fila en semestres */
     }
     body {
         padding: 5px;
     }
     #malla-curricular {
         padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ramo {
+        width: calc(100% - 8px); /* Un ramo por fila en pantallas muy pequeñas */
+    }
+    h1 {
+        font-size: 1.5em;
+    }
+    .year-section h2 {
+        font-size: 1.2em;
+    }
+    .semestre-container h3 {
+        font-size: 1em;
+    }
+    body {
+        font-size: 0.8em;
     }
 }
